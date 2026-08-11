@@ -1,16 +1,14 @@
-# Compiled class file
+# =========================
+# Java / Maven
+# =========================
 *.class
+target/
+.mvn/wrapper/maven-wrapper.jar
 
-# Log file
+# Logs
 *.log
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
+# Package files
 *.jar
 *.war
 *.nar
@@ -19,14 +17,53 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+# =========================
+# IntelliJ IDEA
+# =========================
+.idea/
+*.iws
+*.iml
+*.ipr
 
-# SO
+# =========================
+# Spring Tool Suite
+# =========================
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+# =========================
+# NetBeans
+# =========================
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+build/
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# =========================
+# Environment variables
+# =========================
+.env
+.env.*
+
+# =========================
+# macOS
+# =========================
 .DS_Store
 
-.idea/
-*.iml
-
-.env
+# =========================
+# JVM crash logs
+# =========================
+hs_err_pid*
+replay_pid*
