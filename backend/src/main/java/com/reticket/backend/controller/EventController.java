@@ -6,6 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.reticket.backend.model.Event;
 import org.springframework.web.bind.annotation.GetMapping;
+import com.reticket.backend.dto.CreateEventRequest;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -26,5 +32,14 @@ public class EventController {
     @GetMapping("/{id}")
     public Event getEventById(@PathVariable Long id) {
         return eventService.getEventById(id);
+    }
+
+    @PostMapping
+    public ResponseEntity<Event> createEvent(@Valid @RequestBody CreateEventRequest request) {
+        Event createdEvent = eventService.createEvent(request);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createdEvent);
     }
 }
