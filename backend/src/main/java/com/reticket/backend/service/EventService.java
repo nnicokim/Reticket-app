@@ -5,57 +5,33 @@ import com.reticket.backend.exception.EventNotFoundException;
 import com.reticket.backend.model.Event;
 import com.reticket.backend.model.EventCategory;
 import com.reticket.backend.dto.CreateEventRequest;
+import com.reticket.backend.repository.EventRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.ArrayList;
 
 @Service
 public class EventService {
 
-    private final List<Event> events = new ArrayList<>();
-    private Long nextId = 3L; // a falta de Postgres, por ahora se asigna manualmente el id
+    private final EventRepository eventRepository;
 
-    public EventService() {
-        events.add(
-                new Event(
-                        1L,
-                        "Coldplay",
-                        "Estadio River Plate",
-                        "Buenos Aires",
-                        LocalDateTime.of(2026, 11, 15, 21, 0),
-                        EventCategory.CONCERT
-                )
-        );
-
-        events.add(
-                new Event(
-                        2L,
-                        "Argentina vs Brasil",
-                        "Estadio Monumental",
-                        "Buenos Aires",
-                        LocalDateTime.of(2027, 3, 20, 20, 30),
-                        EventCategory.SPORTS
-                )
-        );
+    public EventService(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
     }
 
     public List<Event> getAllEvents() {
-        return events;
+        return eventRepository.findAll();
     }
 
     public Event getEventById(Long id) {
-        return events.stream()
-                .filter(event -> event.getId().equals(id))
-                .findFirst()
+        return eventRepository.findById(id)
                 .orElseThrow(() -> new EventNotFoundException(id));
     }
 
     public Event createEvent(CreateEventRequest request) {
-
         Event event = new Event(
-                nextId,
+                null,
                 request.name(),
                 request.venue(),
                 request.city(),
@@ -63,15 +39,10 @@ public class EventService {
                 request.category()
         );
 
-        nextId++;
-
-        events.add(event);
-
-        return event;
+        return eventRepository.save(event);
     }
 
     public Event updateEvent(Long id, UpdateEventRequest request) {
-
         Event event = getEventById(id);
 
         event.setName(request.name());
@@ -80,11 +51,11 @@ public class EventService {
         event.setDate(request.date());
         event.setCategory(request.category());
 
-        return event;
+        return eventRepository.save(event);
     }
 
     public void deleteEvent(Long id) {
         Event event = getEventById(id);
-        events.remove(event);
+        eventRepository.delete(event);
     }
 }

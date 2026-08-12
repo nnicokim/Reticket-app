@@ -2,14 +2,25 @@ package com.reticket.backend.model;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Event {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String venue;
     private String city;
     private LocalDateTime date;
+
+    @Enumerated(EnumType.STRING)
     private EventCategory category;
+
+    protected Event() {
+    }
 
     public Event(Long id, String name, String venue, String city, LocalDateTime date, EventCategory category) {
         this.id = id;

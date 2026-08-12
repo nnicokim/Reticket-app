@@ -2,17 +2,14 @@ services:
   postgres:
     image: postgres:18
     container_name: reticket-postgres
-
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_DB: reticket
       POSTGRES_USER: reticket
       POSTGRES_PASSWORD: reticket
-
-    ports:
-      - "5432:5432"
-
     volumes:
-      - reticket-postgres-data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
 
 volumes:
-  reticket-postgres-data:
+  postgres_data:
