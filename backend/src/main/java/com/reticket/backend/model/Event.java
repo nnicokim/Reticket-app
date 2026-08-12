@@ -20,6 +20,26 @@ public class Event {
         this.category = category;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setVenue(String venue) {
+        this.venue = venue;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public void setCategory(EventCategory category) {
+        this.category = category;
+    }
+
     public Long getId() {
         return id;
     }

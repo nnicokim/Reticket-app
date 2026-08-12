@@ -1,5 +1,6 @@
 package com.reticket.backend.service;
 
+import com.reticket.backend.dto.UpdateEventRequest;
 import com.reticket.backend.exception.EventNotFoundException;
 import com.reticket.backend.model.Event;
 import com.reticket.backend.model.EventCategory;
@@ -67,5 +68,23 @@ public class EventService {
         events.add(event);
 
         return event;
+    }
+
+    public Event updateEvent(Long id, UpdateEventRequest request) {
+
+        Event event = getEventById(id);
+
+        event.setName(request.name());
+        event.setVenue(request.venue());
+        event.setCity(request.city());
+        event.setDate(request.date());
+        event.setCategory(request.category());
+
+        return event;
+    }
+
+    public void deleteEvent(Long id) {
+        Event event = getEventById(id);
+        events.remove(event);
     }
 }

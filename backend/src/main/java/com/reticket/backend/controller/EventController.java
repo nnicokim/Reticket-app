@@ -10,6 +10,9 @@ import com.reticket.backend.dto.CreateEventRequest;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import com.reticket.backend.dto.UpdateEventRequest;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -41,5 +44,16 @@ public class EventController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(createdEvent);
+    }
+
+    @PutMapping("/{id}")
+    public Event updateEvent(@PathVariable Long id, @Valid @RequestBody UpdateEventRequest request) {
+        return eventService.updateEvent(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
+        eventService.deleteEvent(id);
+        return ResponseEntity.noContent().build();
     }
 }

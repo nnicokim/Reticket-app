@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
-public record CreateEventRequest(
+public record UpdateEventRequest(
 
         @NotBlank(message = "Name is required")
         String name,
