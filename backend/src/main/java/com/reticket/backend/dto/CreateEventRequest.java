@@ -12,11 +12,8 @@ public record CreateEventRequest(
         @NotBlank(message = "Name is required")
         String name,
 
-        @NotBlank(message = "Venue is required")
-        String venue,
-
-        @NotBlank(message = "City is required")
-        String city,
+        @NotNull(message = "Venue id is required")
+        Long venueId,
 
         @NotNull(message = "Date is required")
         @Future(message = "Date must be in the future")
@@ -24,5 +21,6 @@ public record CreateEventRequest(
 
         @NotNull(message = "Category is required")
         EventCategory category
+
 ) {
 }

@@ -14,10 +14,9 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(EventNotFoundException.class)
-    public ResponseEntity<ApiError> handleEventNotFound(EventNotFoundException exception,
+    @ExceptionHandler({EventNotFoundException.class, VenueNotFoundException.class})
+    public ResponseEntity<ApiError> handleNotFound(RuntimeException exception,
             HttpServletRequest request) {
-
         ApiError error = new ApiError(
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),

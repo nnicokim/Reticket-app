@@ -1,0 +1,8 @@
+ALTER TABLE event
+DROP COLUMN venue;
+
+ALTER TABLE event
+DROP COLUMN city;
+
+ALTER TABLE event
+    ALTER COLUMN venue_id SET NOT NULL;

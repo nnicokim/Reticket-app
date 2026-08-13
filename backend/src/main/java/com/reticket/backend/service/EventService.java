@@ -1,23 +1,27 @@
 package com.reticket.backend.service;
 
+import com.reticket.backend.dto.CreateEventRequest;
 import com.reticket.backend.dto.UpdateEventRequest;
 import com.reticket.backend.exception.EventNotFoundException;
 import com.reticket.backend.model.Event;
-import com.reticket.backend.model.EventCategory;
-import com.reticket.backend.dto.CreateEventRequest;
+import com.reticket.backend.model.Venue;
 import com.reticket.backend.repository.EventRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class EventService {
 
     private final EventRepository eventRepository;
+    private final VenueService venueService;
 
-    public EventService(EventRepository eventRepository) {
+    public EventService(
+            EventRepository eventRepository,
+            VenueService venueService
+    ) {
         this.eventRepository = eventRepository;
+        this.venueService = venueService;
     }
 
     public List<Event> getAllEvents() {
@@ -30,11 +34,11 @@ public class EventService {
     }
 
     public Event createEvent(CreateEventRequest request) {
+        Venue venue = venueService.getVenueById(request.venueId());
         Event event = new Event(
                 null,
                 request.name(),
-                request.venue(),
-                request.city(),
+                venue,
                 request.date(),
                 request.category()
         );
@@ -44,10 +48,10 @@ public class EventService {
 
     public Event updateEvent(Long id, UpdateEventRequest request) {
         Event event = getEventById(id);
+        Venue venue = venueService.getVenueById(request.venueId());
 
         event.setName(request.name());
-        event.setVenue(request.venue());
-        event.setCity(request.city());
+        event.setVenue(venue);
         event.setDate(request.date());
         event.setCategory(request.category());
 

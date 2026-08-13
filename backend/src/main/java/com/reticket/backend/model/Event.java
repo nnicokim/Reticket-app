@@ -1,6 +1,8 @@
 package com.reticket.backend.model;
 
 import java.time.LocalDateTime;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import jakarta.persistence.*;
 
@@ -12,8 +14,11 @@ public class Event {
     private Long id;
 
     private String name;
-    private String venue;
-    private String city;
+
+    @ManyToOne
+    @JoinColumn(name = "venue_id")
+    private Venue venue;
+
     private LocalDateTime date;
 
     @Enumerated(EnumType.STRING)
@@ -22,11 +27,10 @@ public class Event {
     protected Event() {
     }
 
-    public Event(Long id, String name, String venue, String city, LocalDateTime date, EventCategory category) {
+    public Event(Long id, String name, Venue venue, LocalDateTime date, EventCategory category) {
         this.id = id;
         this.name = name;
         this.venue = venue;
-        this.city = city;
         this.date = date;
         this.category = category;
     }
@@ -35,12 +39,8 @@ public class Event {
         this.name = name;
     }
 
-    public void setVenue(String venue) {
+    public void setVenue(Venue venue) {
         this.venue = venue;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public void setDate(LocalDateTime date) {
@@ -59,12 +59,8 @@ public class Event {
         return name;
     }
 
-    public String getVenue() {
+    public Venue getVenue() {
         return venue;
-    }
-
-    public String getCity() {
-        return city;
     }
 
     public LocalDateTime getDate() {
