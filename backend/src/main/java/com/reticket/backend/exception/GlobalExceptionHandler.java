@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({EventNotFoundException.class, VenueNotFoundException.class})
+    @ExceptionHandler({EventNotFoundException.class, VenueNotFoundException.class,
+            UserNotFoundException.class})
     public ResponseEntity<ApiError> handleNotFound(RuntimeException exception,
             HttpServletRequest request) {
         ApiError error = new ApiError(
@@ -48,5 +49,20 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<ApiError> handleConflict(EmailAlreadyExistsException exception,
+            HttpServletRequest request) {
+
+        ApiError error = new ApiError(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                HttpStatus.CONFLICT.name(),
+                exception.getMessage(),
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 }
